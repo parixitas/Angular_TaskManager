@@ -1,0 +1,47 @@
+<section class="todo-panel">
+  <div class="info-row">
+    <div class="status">
+      <span>{{ totalTodos$ | async }} tasks</span>
+      <span>{{ completedCount$ | async }} completed</span>
+    </div>
+    <div class="filters">
+      <button
+        type="button"
+        [class.active]="activeFilter === 'all'"
+        (click)="setFilter('all')"
+      >
+        All
+      </button>
+      <button
+        type="button"
+        [class.active]="activeFilter === 'completed'"
+        (click)="setFilter('completed')"
+      >
+        Completed
+      </button>
+      <button
+        type="button"
+        [class.active]="activeFilter === 'pending'"
+        (click)="setFilter('pending')"
+      >
+        Pending
+      </button>
+    </div>
+  </div>
+
+  <app-todo-form (add)="addTodo($event)"></app-todo-form>
+
+  <ul class="todo-list">
+    <li *ngFor="let todo of filteredTodos$ | async; trackBy: trackById">
+      <app-todo-item
+        [todo]="todo"
+        (toggle)="toggle($event)"
+        (remove)="delete($event)"
+      ></app-todo-item>
+    </li>
+  </ul>
+
+  <div class="empty-state" *ngIf="(filteredTodos$ | async)?.length === 0">
+    There are no tasks in this view yet. Add a task to get started.
+  </div>
+</section>

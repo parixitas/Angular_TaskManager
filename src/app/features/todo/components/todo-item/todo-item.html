@@ -1,0 +1,16 @@
+<div class="todo-item" [ngClass]="{ completed: todo.completed, pending: !todo.completed }">
+  <label class="checkbox">
+    <input
+      type="checkbox"
+      [checked]="todo.completed"
+      (change)="toggle.emit(todo.id)"
+    />
+    <span class="task-title">{{ todo.title }}</span>
+  </label>
+
+  <span class="status-pill" [ngClass]="{ completed: todo.completed, pending: !todo.completed }">
+    {{ todo.completed ? 'Completed' : 'Pending' }}
+  </span>
+
+  <button type="button" class="delete" (click)="remove.emit(todo.id)">Delete</button>
+</div>
